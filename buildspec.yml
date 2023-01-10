@@ -25,7 +25,7 @@ phases:
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - aws s3 ls
+      - aws ecs update-service --cluster cargil-app-dev-use1-cluster1 --service cargil-app-dev-use1 --task-definition my_group --desired-count 1 --force-new-deployment --region="us-east-1"
       - echo Writing image definitions file...
       - printf '[{"name":"Petr","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
